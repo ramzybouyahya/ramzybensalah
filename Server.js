@@ -1,8 +1,5 @@
 const express = require("express");
-const helmet = require("helmet");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const morgan = require("morgan");
 const mongoose  = require("mongoose");
 const quiz = require("./models/Quiz");
 var port = process.env.PORT || 6200;
@@ -10,18 +7,12 @@ var port = process.env.PORT || 6200;
 
 const app = express();
 
-app.use(helmet());
 app.use(cors);
-app.use(morgan());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 
 
 
-mongoose.connect("mongodb://127.0.0.1:27017/", { useNewUrlParser: true }, function (err) {
-      if (err) return console.err(err);
-      console.log("Mongoose is connected");
-    });
+mongoose.connect("mongodb://127.0.0.1:27017/");
 
 app.post('/insert',async (req,res)=>{
       const name = req.body.name;
